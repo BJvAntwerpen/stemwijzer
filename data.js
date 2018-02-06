@@ -183,73 +183,73 @@ var subjects = [
 		parties: []
 	},//16
 	{
-		title: "",
-		statement: "",
+		title: "Hypotheekrente",
+		statement: "De regeling voor de aftrek van de hypotheekrente moet niet verder worden aangetast.",
 		parties: []
 	},//17
 	{
-		title: "",
-		statement: "",
+		title: "Verhuurdersheffing",
+		statement: "Woningcorporaties moeten meer goedkope huurwoningen bouwen. Daarom moet de belasting die zij betalen over huurwoningen (verhuurdersheffing) worden afgeschaft.",
 		parties: []
 	},//18
 	{
-		title: "",
-		statement: "",
+		title: "Schiphol",
+		statement: "Luchthaven Schiphol moet kunnen uitbreiden.",
 		parties: []
 	},//19
 	{
-		title: "",
-		statement: "",
+		title: "Kilometerheffing",
+		statement: "De regering moet niet het bezit van de auto, maar het aantal gereden kilometers belasten.",
 		parties: []
 	},//20
 	{
-		title: "",
-		statement: "",
+		title: "Nieuwe wegen",
+		statement: "Er moet meer geld naar de aanleg van nieuwe wegen.",
 		parties: []
 	},//21
 	{
-		title: "",
-		statement: "",
+		title: "Kolencentrales",
+		statement: "Alle kolencentrales mogen voorlopig open blijven.",
 		parties: []
 	},//22
 	{
-		title: "",
-		statement: "",
+		title: "Btw-tarief vlees",
+		statement: "Voor vlees moet het hoge btw-tarief van 21 procent gaan gelden.",
 		parties: []
 	},//23
 	{
-		title: "",
-		statement: "",
+		title: "Voltooid leven",
+		statement: "Ouderen die vinden dat hun leven voltooid is moeten hulp kunnen krijgen om een einde aan hun leven te maken.",
 		parties: []
 	},//24
 	{
-		title: "",
-		statement: "",
+		title: "Afschaffing eigen risico",
+		statement: "Het eigen risico in de zorg moet worden afgeschaft, ook als dat betekent dat de premies omhoog gaan.",
 		parties: []
 	},//25
 	{
-		title: "",
-		statement: "",
+		title: "Landelijk zorgfonds",
+		statement: "Er moet een landelijk zorgfonds komen, zodat het stelsel van particuliere zorgverzekeraars kan verdwijnen.",
 		parties: []
 	},//26
 	{
-		title: "",
-		statement: "",
+		title: "Defensie-uitgaven",
+		statement: "De uitgaven voor defensie moeten de komende jaren fors omhoog naar 2 procent van het nationale inkomen (de NAVO-norm).",
 		parties: []
 	},//27
 	{
-		title: "",
-		statement: "",
+		title: "Europees leger",
+		statement: "Er moet een Europees leger komen.",
 		parties: []
 	},//28
 	{
-		title: "",
-		statement: "",
+		title: "Ontwikkelingshulp",
+		statement: "Nederland moet meer geld uitgeven voor de ontwikkeling van arme landen.",
 		parties: []
 	},//29
 	{
-		title: "",
-		statement: "",
+		title: "EU-lidmaatschap",
+		statement: "Nederland moet uit de Europese Unie (EU) stappen.",
 		parties: []
 	}//30
 ];
