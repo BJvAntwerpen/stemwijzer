@@ -61,7 +61,7 @@ var stemwijzerModule = (function() {
 	};
 
 	var start = function() {
-		btns = document.getElementsByTagName('button');
+		var btns = document.getElementsByTagName('button');
 		for (var i = 0; i < btns.length; i++) {
 			if (btns[i].id == 'start') {
 				btns[i].style.display = 'none';
