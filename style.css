@@ -46,3 +46,7 @@ h1, p, button {
 #skip {
 	left: 370px;
 }
+
+.lastAnswer {
+	background-color: green;
+}

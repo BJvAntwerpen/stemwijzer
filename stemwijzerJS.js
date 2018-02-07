@@ -41,10 +41,19 @@ var stemwijzerModule = (function() {
 		}
 	};
 
+	var clearClass = function() {
+		document.getElementById('pro').className = '';
+		document.getElementById('con').className = '';
+		document.getElementById('skip').className = '';
+		document.getElementById('neither').className = '';
+	};
+
 	var back = function() {
-		answers.pop();
+		var last = answers.pop();
 		statementNum--;
+		clearClass();
 		if (statementNum > -1) {
+			document.getElementById(last).className = 'lastAnswer';
 			changeStatement();
 		} else {
 			btns = document.getElementsByTagName('button');
