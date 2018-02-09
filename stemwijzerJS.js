@@ -1,18 +1,10 @@
 var stemwijzerModule = (function() {
 	var statementNum = -1;
 	var answers = [];
+	var totalCounted = {};
 	var title = document.getElementById('Title');
 	var statement = document.getElementById('statement');
-
-	/*var callFunction = function(action, arguments = [], context = window) {
-		var args = Array.prototype.slice.call(arguments);
-		var nameSpaces = action.split('.');
-		var func = nameSpaces.pop();
-		for(var i = 0; i < nameSpaces.length; i++) {
-			context = context[nameSpaces[i]];
-		}
-		return context[func].apply(context, args);
-	};*/
+	var btns = document.getElementsByTagName('button');
 
 	var changeStatement = function() {
 		if (statementNum === -1) {
@@ -28,35 +20,60 @@ var stemwijzerModule = (function() {
 	var answered = function(answer) {
 		answers[statementNum] = answer;
 		console.log(answers);
-		if (statementNum === 29) {
-			btns = document.getElementsByTagName('button');
+		if (statementNum === (subjects.length -1)) {
+			statementNum++;
 			for (var i = 0; i < btns.length; i++) {
 				btns[i].style.display = 'none';
 			}
-			title.style.display = 'none';
-			statement.innerHTML = 'je bent klaar';
+			document.getElementById('back').style.display = 'inline';
+			title.innerHTML = 'Je bent klaar';
+			statement.innerHTML = '';
+			countAnswers();
 		} else {
 			statementNum++;
 			changeStatement();
 		}
 	};
 
+	var countAnswers = function() {
+		for (var i = 0; i < subjects.length; i++) {
+			for (var j = 0; j < subjects[i].parties.length; j++) {
+				var party = subjects[i].parties[j].name;
+				var opinion = subjects[i].parties[j].position;
+				
+			}
+		}
+		/*for (var i = 0; i < answers.length; i++) {
+			if (answers[i] == 'skip') {
+				continue;
+			}
+		}*/
+	};
+
 	var clearClass = function() {
 		document.getElementById('pro').className = '';
-		document.getElementById('con').className = '';
+		document.getElementById('contra').className = '';
 		document.getElementById('skip').className = '';
-		document.getElementById('neither').className = '';
+		document.getElementById('ambivalent').className = '';
 	};
 
 	var back = function() {
 		var last = answers.pop();
-		statementNum--;
 		clearClass();
-		if (statementNum > -1) {
+		if (statementNum > 0 && statementNum < subjects.length) {
+			statementNum--;
+			document.getElementById(last).className = 'lastAnswer';
+			changeStatement();
+		} else if (statementNum === subjects.length) {
+			statementNum--;
+			for (var i = 0; i < btns.length; i++) {
+				if (btns[i].id !== 'start') {
+					btns[i].style.display = 'inline';
+				}
+			}
 			document.getElementById(last).className = 'lastAnswer';
 			changeStatement();
 		} else {
-			btns = document.getElementsByTagName('button');
 			for (var i = 0; i < btns.length; i++) {
 				if (btns[i].id == 'start') {
 					btns[i].style.display = 'inline';
@@ -70,7 +87,6 @@ var stemwijzerModule = (function() {
 	};
 
 	var start = function() {
-		var btns = document.getElementsByTagName('button');
 		for (var i = 0; i < btns.length; i++) {
 			if (btns[i].id == 'start') {
 				btns[i].style.display = 'none';
@@ -86,8 +102,8 @@ var stemwijzerModule = (function() {
 	var init = (function() {
 		document.getElementById('start').onclick = function(){start();};
 		document.getElementById('pro').onclick = function(){answered('pro');};
-		document.getElementById('neither').onclick = function(){answered('neither');};
-		document.getElementById('con').onclick = function(){answered('con');};
+		document.getElementById('ambivalent').onclick = function(){answered('ambivalent');};
+		document.getElementById('contra').onclick = function(){answered('contra');};
 		document.getElementById('skip').onclick = function(){answered('skip');};
 		document.getElementById('back').onclick = function(){back();};
 	})();

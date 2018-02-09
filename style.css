@@ -11,7 +11,7 @@ h1, p, button {
 	display: none;
 }
 
-#Title, #statement, #pro, #neither, #con, #skip {
+#Title, #statement, #pro, #ambivalent, #contra, #skip {
 	position: absolute;
 }
 
@@ -25,7 +25,7 @@ h1, p, button {
 	left: 25px;
 }
 
-#pro, #neither, #con, #skip {
+#pro, #ambivalent, #contra, #skip {
 	top: 300px;
 	width: 110px;
 	height: 25px;
@@ -35,11 +35,11 @@ h1, p, button {
 	left: 25px;
 }
 
-#neither {
+#ambivalent {
 	left: 140px;
 }
 
-#con {
+#contra {
 	left: 255px;
 }
 

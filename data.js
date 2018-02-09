@@ -181,17 +181,31 @@ var subjects = [
 	{
 		title: 'Vennootschapsbelasting',
 		statement: 'De belasting over de winst van ondernemingen (vennootschapsbelasting) moet omlaag.',
-		parties: []
+		parties: [
+			{name: "VVD", position: "pro", explanation: "Om bedrijven in Nederland te houden en meer bedrijven hier te krijgen, willen wij de vennootschapsbelasting verlagen. Zo kunnen bedrijven de concurrentie met omringende landen aan en blijven banen in Nederland."},
+			{name: "CDA", position: "pro", explanation: "Ondernemers betalen momenteel veel belasting over hun winst. Ondernemen moet weer lonend worden en Nederlandse ondernemers moeten kunnen concurreren tegen producten en diensten uit het buitenland. Het hoge tarief van de vennootschapsbelasting zou pas bij een hogere winst moeten gelden, zodat MKB-ondernemers minder winstbelasting verschuldigd zijn."},
+			{name: "SGP", position: "pro", explanation: "Om de werkgelegenheid en de economische groei te stimuleren moeten de lasten voor ondernemers omlaag. In het financieel plaatje van de SGP wordt het tarief daarom verlaagd. "},
+			{name: "OndernemersPartij", position: "pro", explanation: "Dit stimuleert het ondernemen."},
+			{name: "VNL", position: "pro", explanation: "Lage belasting voor bedrijven betekent meer economische groei. Dit zorgt voor meer banen, meer koopkracht en dus meer welvaart voor iedereen."},
+			{name: "Forum voor Democratie", position: "pro", explanation: "Vooral voor het MKB en ZZP-ers moet de belasting omlaag, zij betalen in de praktijk vaak meer belasting dan de multinationals."},
+			{name: "Libertarische Partij", position: "pro", explanation: "Vanzelfsprekend moeten alle belastingen omlaag, dus ook de vennootschapsbelasting. Meer geld in het laatje van ondernemers betekent meer investeringsmogelijkheden en meer banengroei."},
+			{name: "Lokaal in de Kamer", position: "pro", explanation: "Ondernemers betalen naar verhouding veel belasting, terwijl zij voor werkgelegenheid zorgen. Lagere belastingen kunnen leiden tot meer investeringen en dus meer banen. "},
+			{name: "PvdA", position: "contra", explanation: "Bedrijven moeten net als alle anderen gewoon netjes hun belasting betalen. Op dit moment betalen werknemers het leeuwendeel van de belasting en bedrijven een relatief laag tarief. Verlaging is dus onnodig."},
+			{name: "PVV", position: "contra", explanation: "Geen toelichting gegeven"},
+			{name: "SP", position: "contra", explanation: "Bedrijven, zeker de grote multinationals, betalen in Nederland al weinig belasting in vergelijking tot andere landen. Door de belastingen voor de multinationals juist te verhogen en belastingontwijking tegen te gaan, kunnen de lasten voor gewone werknemers weer omlaag."},
+			{name: "D66", position: "contra", explanation: "Het is belangrijk dat Nederland aantrekkelijk is voor bedrijven om zich te vestigen. Dit levert banen op en is goed voor de economie. D66 kiest er voor om andere belastingen, zoals de inkomstenbelasting verlagen. Daarvan profiteert iedereen en niet alleen bedrijven."},
+			{name: "ChristenUnie", position: "contra", explanation: "De ChristenUnie hervormt het belastingstelsel. Het wordt moeilijker belastingen te ontwijken. Het midden- en kleinbedrijf gaat minder belasting betalen, multinationals meer."},
+			{name: "GroenLinks", position: "contra", explanation: "GroenLinks wil welvaart eerlijk delen. We willen dat iedereen zijn deel bijdraagt: grote bedrijven betalen nu veel minder belastingen dan werknemers en kleine ondernemers betalen. Daarom vragen wij meer van multinationals en pakken wij belastingontwijking aan."},
+			{name: "Partij voor de Dieren", position: "contra", explanation: "Het tarief kan in principe ongewijzigd blijven. Belangrijker is dat multinationals geen deals meer met de fiscus kunnen sluiten tbv belastingontwijking. Zo kan oneerlijke concurrentie tussen multinationals en het MKB aangepakt worden. De belasting op arbeid moet wel verlaagd worden. De werkgelegenheid wordt zo bevorderd."},
+			{name: "50Plus", position: "contra", explanation: "50PLUS vindt niet dat de vennootschapsbelasting per definitie omlaag moet. Het huidige tarief is (nog) behoorlijk concurrerend binnen de EU. "},
+			{name: "DENK", position: "contra", explanation: "Multinationals en grote bedrijven moeten wat DENK betreft een grotere bijdrage leveren aan onze samenleving. Op dit moment wordt er door deze ondernemingen te veel belasting ontdoken en ontweken. Daarom vraagt DENK van grote bedrijven wat meer, zodat we de mensen die het nodig hebben kunnen steunen. "},
+			{name: "Nieuwe Wegen", position: "contra", explanation: "Grote bedrijven en multinationals zoals Apple en Starbucks moeten meer belasting gaan betalen. Zij maken misbruik van ons belastingsysteem en de kansen die de EU ze geeft. Hoogste tijd dat zij door meer belastingen te betalen bij gaan dragen aan onze zorg, onderwijs en veiligheid. Voor het midden- en kleinbedrijf mogen de belastingen niet omhoog. Zij zijn de spil en banenmotor van onze economie. "},
+			{name: "De Burger Beweging", position: "contra", explanation: "Oneens, belasting op winst van bedrijven is sinds 1990 al gehalveerd en nu veel lager dan belasting op inkomsten uit arbeid."},
+			{name: "Vrijzinnige Partij", position: "contra", explanation: "De vennootschapbelasting moet juist omhoog. Door invoering van het basisinkomen zullen de bedrijven lager loonkosten hebben en meer winst. Met onder andere die hogere belasting op de winst kan het basisinkomen betaald worden."},
+			{name: "Piratenpartij", position: "contra", explanation: "De Piratenpartij is van mening dat het belastingklimaat gunstiger moet worden voor kleine ondernemers en ZZP'ers. Echter, een algehele verlaging van de vennootschapsbelasting zou ook de multinationals steunen terwijl veel kleine ondernemers er niks van merken omdat ze toch al geen vennootschapsbelasting betalen. Hiervoor zijn betere maatregelen te bedenken zoals bijvoorbeeld een hogere ondernemersaftrek."},
+			{name: "Artikel 1", position: "contra", explanation: "Bedrijven betalen nu al relatief weinig belasting in vergelijking met burgers."}
+		]
 	},//7
-/*
-eens
-
-
-geen van beide
-
-
-oneens
-*/
 	{
 		title: 'Belasting hoogste inkomens',
 		statement: 'De hoogste inkomensgroepen moeten meer belasting gaan betalen.',
@@ -330,4 +344,3 @@ var parties = [
 	{name: 'Artikel 1', secular: true, size: 0},
 	{name: 'Libertarische Partij', secular: true, size: 0}
 ];
-
