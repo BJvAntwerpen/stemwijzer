@@ -2,6 +2,7 @@ var stemwijzerModule = (function() {
 	var statementNum = -1;
 	var answers = [];
 	var totalCounted = {};
+	var bestParties = [];
 	var title = document.getElementById('Title');
 	var statement = document.getElementById('statement');
 	var btns = document.getElementsByTagName('button');
@@ -22,10 +23,7 @@ var stemwijzerModule = (function() {
 		console.log(answers);
 		if (statementNum === (subjects.length -1)) {
 			statementNum++;
-			for (var i = 0; i < btns.length; i++) {
-				btns[i].style.display = 'none';
-			}
-			document.getElementById('back').style.display = 'inline';
+			document.getElementById('answerContainer').style.display = 'none';
 			title.innerHTML = 'Je bent klaar';
 			statement.innerHTML = '';
 			countAnswers();
@@ -36,18 +34,43 @@ var stemwijzerModule = (function() {
 	};
 
 	var countAnswers = function() {
+		totalCounted = {};
+		bestParties = [];
+		Questions:
 		for (var i = 0; i < subjects.length; i++) {
 			for (var j = 0; j < subjects[i].parties.length; j++) {
 				var party = subjects[i].parties[j].name;
 				var opinion = subjects[i].parties[j].position;
-				
+				if (answers[i] == 'skip') {
+					continue Questions;
+				}
+				if (totalCounted[party] === undefined) {
+					totalCounted[party] = 0;
+				}
+				if (answers[i] === opinion) {
+					totalCounted[party] += 1;
+				}
 			}
 		}
-		/*for (var i = 0; i < answers.length; i++) {
-			if (answers[i] == 'skip') {
-				continue;
+		
+		for (i = 0; i < 3; i++) {
+			var tmpArray = [];
+			for (var name in totalCounted) {	
+				tmpArray.push(totalCounted[name]);
 			}
-		}*/
+			var max = Math.max(...tmpArray);
+			console.log(max);
+			var tmpArray2 = [];
+			for (name in totalCounted) {	
+				if (totalCounted[name] == max) {
+					tmpArray2.push(name);
+					totalCounted[name] = ((i+1)*-1);
+				}
+			}
+			bestParties.push(tmpArray2);
+		}
+		console.log(totalCounted);
+		console.log(bestParties);
 	};
 
 	var clearClass = function() {
@@ -66,34 +89,22 @@ var stemwijzerModule = (function() {
 			changeStatement();
 		} else if (statementNum === subjects.length) {
 			statementNum--;
-			for (var i = 0; i < btns.length; i++) {
-				if (btns[i].id !== 'start') {
-					btns[i].style.display = 'inline';
-				}
-			}
+			document.getElementById('answerContainer').style.display = 'inline';
 			document.getElementById(last).className = 'lastAnswer';
 			changeStatement();
 		} else {
-			for (var i = 0; i < btns.length; i++) {
-				if (btns[i].id == 'start') {
-					btns[i].style.display = 'inline';
-				} else {
-					btns[i].style.display = 'none';
-				}
-			}
+			document.getElementById('start').style.display = 'inline';
+			document.getElementById('answerContainer').style.display = 'none';
+			document.getElementById('back').style.display = 'none';
 			title.style.display = 'none';
 			statement.style.display = 'none';
 		}
 	};
 
 	var start = function() {
-		for (var i = 0; i < btns.length; i++) {
-			if (btns[i].id == 'start') {
-				btns[i].style.display = 'none';
-			} else {
-				btns[i].style.display = 'inline';
-			}
-		}
+		document.getElementById('answerContainer').style.display = 'inline';
+		document.getElementById('back').style.display = 'inline';
+		document.getElementById('start').style.display = 'none';
 		title.style.display = 'inline';
 		statement.style.display = 'inline';
 		changeStatement();
