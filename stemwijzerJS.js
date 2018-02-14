@@ -42,10 +42,11 @@ var stemwijzerModule = (function() {
 	var countAnswers = function() {
 		statementNum++;
 		form.style.display = 'none';
+		var party = setPartySize();
 		totalCounted = {};
 		bestParties = [];
 		for (var i = 0; i < inputLength.length; i++) {
-			if (inputLength[i].checked) {
+			if (inputLength[i].checked == true && !(inputLength[i].id == 'mainParty' || inputLength[i].id == 'secParty')) {
 				checkedBox[i] = true;
 			} else {
 				checkedBox[i] = false;
@@ -94,12 +95,41 @@ var stemwijzerModule = (function() {
 		}
 	};
 
+	var setPartySize = function() {
+		var bigParty = [
+			{name:'PVV'},
+			{name:'SP'},
+			{name:'D66'},
+			{name:'GroenLinks'},
+			{name:'VVD'},
+			{name:'PvdA'},
+			{name:'CDA'}
+		];
+		var smallParty = [
+			{name:'Partij voor de Dieren'},
+			{name:'50Plus'},
+			{name:'VNL'},
+			{name:'Nieuwe Wegen'},
+			{name:'Forum voor Democratie'},
+			{name:'De Burger Beweging'},
+			{name:'Vrijzinnige Partij'},
+			{name:'Piratenpartij'},
+			{name:'Libertarische Partij'},
+			{name:'Lokaal in de Kamer'},
+			{name:'ChristenUnie'},
+			{name:'SGP'},
+			{name:'OndernemersPartij'},
+			{name:'DENK'},
+			{name:'Artikel 1'}
+		];
+	};
+
 	var calcPercent = function(count) {
 		var percent = 0;
 		var maxd = subjects.length;
 		var inputLength = document.getElementsByTagName('input');
 		for (var i = 0; i < inputLength.length; i++) {
-			if (inputLength[i].checked == true) {
+			if (inputLength[i].checked == true && !(inputLength[i].id == 'mainParty' || inputLength[i].id == 'secParty')) {
 				maxd += 1;
 			}
 		}
@@ -117,8 +147,10 @@ var stemwijzerModule = (function() {
 
 	var genInputs = function() {
 		for (var i = 0; i < subjects.length; i++) {
-			contentForm.innerHTML += '<label>'+ subjects[i].title +'</label><input type="checkbox" name="extraWeight" value="q'+(i+1)+'"><br>';
+			contentForm.innerHTML += '<label>'+ subjects[i].title +'</label><input type="checkbox" name="extraWeight"><br>';
 		}
+		contentForm.innerHTML += '<label>Grote partijen?</label><input type="checkbox" name="groteParijen" id="mainParty"><br>';
+		contentForm.innerHTML += '<label>Seculiere partijen?</label><input type="checkbox" name="seculiereParijen" id="secParty"><br>';
 	};
 
 	var back = function() {
