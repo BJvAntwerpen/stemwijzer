@@ -5,7 +5,8 @@ var stemwijzerModule = (function() {
 	var bestParties = [];
 	var title = document.getElementById('Title');
 	var statement = document.getElementById('statement');
-	var btns = document.getElementsByTagName('button');
+	var form = document.getElementById('formContainer');
+	var contentForm = document.getElementById('weight');
 
 	var changeStatement = function() {
 		if (statementNum === -1) {
@@ -25,8 +26,9 @@ var stemwijzerModule = (function() {
 			statementNum++;
 			document.getElementById('answerContainer').style.display = 'none';
 			title.innerHTML = 'Je bent klaar';
-			statement.innerHTML = '';
-			countAnswers();
+			statement.innerHTML = 'welke vragen moeten meer gewicht hebben?:<br>';
+			genInputs();
+			form.style.display = 'inline';
 		} else {
 			statementNum++;
 			changeStatement();
@@ -34,10 +36,11 @@ var stemwijzerModule = (function() {
 	};
 
 	var countAnswers = function() {
+		form.style.display = 'none';
 		totalCounted = {};
 		bestParties = [];
 		Questions:
-		for (var i = 0; i < subjects.length; i++) {
+		for (var i = 0; i < subjects.length; i++) {//question
 			for (var j = 0; j < subjects[i].parties.length; j++) {
 				var party = subjects[i].parties[j].name;
 				var opinion = subjects[i].parties[j].position;
@@ -48,7 +51,11 @@ var stemwijzerModule = (function() {
 					totalCounted[party] = 0;
 				}
 				if (answers[i] === opinion) {
-					totalCounted[party] += 1;
+					if (false) {
+						//
+					} else {
+						totalCounted[party] += 1;
+					}
 				}
 			}
 		}
@@ -60,17 +67,25 @@ var stemwijzerModule = (function() {
 			}
 			var max = Math.max(...tmpArray);
 			console.log(max);
-			var tmpArray2 = [];
+			bestParties = [];
+			statement.innerHTML += '' + (i+1) + '. ';
 			for (name in totalCounted) {	
 				if (totalCounted[name] == max) {
-					tmpArray2.push(name);
+					bestParties.push(name);
 					totalCounted[name] = ((i+1)*-1);
 				}
 			}
-			bestParties.push(tmpArray2);
+			statement.innerHTML += bestParties.join(', ');
+			calcPercent(max);
 		}
-		console.log(totalCounted);
-		console.log(bestParties);
+	};
+
+	var calcPercent = function(count) {
+		var percent = 0;
+		var maxd = 7;
+		percent = (count/maxd*100).toFixed(1);
+		statement.innerHTML += ': ' + percent + '%<br>';
+		console.log(percent);
 	};
 
 	var clearClass = function() {
@@ -78,6 +93,12 @@ var stemwijzerModule = (function() {
 		document.getElementById('contra').className = '';
 		document.getElementById('skip').className = '';
 		document.getElementById('ambivalent').className = '';
+	};
+
+	var genInputs = function() {
+		for (var i = 0; i < subjects.length; i++) {
+			contentForm.innerHTML += '<label>'+ subjects[i].title +'</label><input type="checkbox" name="extraWeight" value="q'+(i+1)+'"><br>';
+		}
 	};
 
 	var back = function() {
@@ -117,5 +138,6 @@ var stemwijzerModule = (function() {
 		document.getElementById('contra').onclick = function(){answered('contra');};
 		document.getElementById('skip').onclick = function(){answered('skip');};
 		document.getElementById('back').onclick = function(){back();};
+		document.getElementById('next').onclick = function(){countAnswers();};
 	})();
 })();

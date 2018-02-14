@@ -54,3 +54,17 @@ h1, p, div {
 .lastAnswer {
 	background-color: green;
 }
+
+#formContainer {
+	position: absolute;
+	width: 230px;
+	top: 200px;
+	left: 25px;
+	display: none;
+	border: 1px solid black;
+}
+
+input[type="checkbox"] {
+	position: absolute;
+	right: 5px;
+}
