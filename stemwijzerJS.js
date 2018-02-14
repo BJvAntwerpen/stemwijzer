@@ -3,10 +3,12 @@ var stemwijzerModule = (function() {
 	var answers = [];
 	var totalCounted = {};
 	var bestParties = [];
+	var checkedBox = [];
 	var title = document.getElementById('Title');
 	var statement = document.getElementById('statement');
 	var form = document.getElementById('formContainer');
 	var contentForm = document.getElementById('weight');
+	var inputLength = document.getElementsByTagName('input');
 
 	var changeStatement = function() {
 		if (statementNum === -1) {
@@ -21,13 +23,15 @@ var stemwijzerModule = (function() {
 
 	var answered = function(answer) {
 		answers[statementNum] = answer;
-		console.log(answers);
+		console.log(statementNum);
 		if (statementNum === (subjects.length -1)) {
 			statementNum++;
 			document.getElementById('answerContainer').style.display = 'none';
 			title.innerHTML = 'Je bent klaar';
 			statement.innerHTML = 'welke vragen moeten meer gewicht hebben?:<br>';
-			genInputs();
+			if ((document.getElementsByTagName('input')).length == 0) {
+				genInputs();
+			}
 			form.style.display = 'inline';
 		} else {
 			statementNum++;
@@ -36,11 +40,19 @@ var stemwijzerModule = (function() {
 	};
 
 	var countAnswers = function() {
+		statementNum++;
 		form.style.display = 'none';
 		totalCounted = {};
 		bestParties = [];
+		for (var i = 0; i < inputLength.length; i++) {
+			if (inputLength[i].checked) {
+				checkedBox[i] = true;
+			} else {
+				checkedBox[i] = false;
+			}
+		}
 		Questions:
-		for (var i = 0; i < subjects.length; i++) {//question
+		for (i = 0; i < subjects.length; i++) {//question
 			for (var j = 0; j < subjects[i].parties.length; j++) {
 				var party = subjects[i].parties[j].name;
 				var opinion = subjects[i].parties[j].position;
@@ -51,15 +63,16 @@ var stemwijzerModule = (function() {
 					totalCounted[party] = 0;
 				}
 				if (answers[i] === opinion) {
-					if (false) {
-						//
+					if (checkedBox[i] == true) {
+						totalCounted[party] += 2;
 					} else {
 						totalCounted[party] += 1;
 					}
 				}
 			}
 		}
-		
+
+		statement.innerHTML = 'Dit zijn de beste matches:<br>'
 		for (i = 0; i < 3; i++) {
 			var tmpArray = [];
 			for (var name in totalCounted) {	
@@ -68,6 +81,7 @@ var stemwijzerModule = (function() {
 			var max = Math.max(...tmpArray);
 			console.log(max);
 			bestParties = [];
+			statement.style.display = 'inline';
 			statement.innerHTML += '' + (i+1) + '. ';
 			for (name in totalCounted) {	
 				if (totalCounted[name] == max) {
@@ -82,7 +96,13 @@ var stemwijzerModule = (function() {
 
 	var calcPercent = function(count) {
 		var percent = 0;
-		var maxd = 7;
+		var maxd = subjects.length;
+		var inputLength = document.getElementsByTagName('input');
+		for (var i = 0; i < inputLength.length; i++) {
+			if (inputLength[i].checked == true) {
+				maxd += 1;
+			}
+		}
 		percent = (count/maxd*100).toFixed(1);
 		statement.innerHTML += ': ' + percent + '%<br>';
 		console.log(percent);
@@ -102,7 +122,7 @@ var stemwijzerModule = (function() {
 	};
 
 	var back = function() {
-		var last = answers.pop();
+		var last = answers[statementNum-1];
 		clearClass();
 		if (statementNum > 0 && statementNum < subjects.length) {
 			statementNum--;
@@ -111,14 +131,22 @@ var stemwijzerModule = (function() {
 		} else if (statementNum === subjects.length) {
 			statementNum--;
 			document.getElementById('answerContainer').style.display = 'inline';
+			form.style.display = 'none';
 			document.getElementById(last).className = 'lastAnswer';
 			changeStatement();
-		} else {
+		} else if (statementNum == 0) {
 			document.getElementById('start').style.display = 'inline';
 			document.getElementById('answerContainer').style.display = 'none';
 			document.getElementById('back').style.display = 'none';
 			title.style.display = 'none';
 			statement.style.display = 'none';
+		} else if (statementNum > subjects.length) {
+			statementNum--;
+			statement.style.display = 'none';
+			form.style.display = 'inline';
+			for (var i = 0; i < checkedBox.length; i++) {
+				inputLength[i].checked = checkedBox[i];
+			}
 		}
 	};
 
