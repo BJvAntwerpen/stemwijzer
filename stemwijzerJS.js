@@ -42,7 +42,7 @@ var stemwijzerModule = (function() {
 	var countAnswers = function() {
 		statementNum++;
 		form.style.display = 'none';
-		var party = setPartySize();
+		//var party = setPartySize();
 		totalCounted = {};
 		bestParties = [];
 		for (var i = 0; i < inputLength.length; i++) {
@@ -62,17 +62,17 @@ var stemwijzerModule = (function() {
 				if (answers[i] == 'skip') {
 					continue Questions;
 				}
-				if (totalCounted[party] === undefined) {
-					totalCounted[party] = 0;
+				if (totalCounted[partyName] === undefined) {
+					totalCounted[partyName] = 0;
 				}
 				if (answers[i] === opinion) {
-					for (var k = 0; k < party.length; k++) {
+					//for (var k = 0; k < party.length; k++) {
 						if (checkedBox[i] === true) {
-							totalCounted[party] += 2;
+							totalCounted[partyName] += 2;
 						} else {
-							totalCounted[party] += 1;
+							totalCounted[partyName] += 1;
 						}
-					}
+					//}
 				}
 			}
 		}
@@ -165,9 +165,9 @@ var stemwijzerModule = (function() {
 		for (var i = 0; i < subjects.length; i++) {
 			contentForm.innerHTML += '<label>'+ subjects[i].title +'</label><input type="checkbox" name="extraWeight"><br>';
 		}
-		contentForm.innerHTML += '<label>Standaard?</label><input type="radio" name="party" id="normalParty" checked><br>';
+		/*contentForm.innerHTML += '<label>Standaard?</label><input type="radio" name="party" id="normalParty" checked><br>';
 		contentForm.innerHTML += '<label>Grote partijen?</label><input type="radio" name="party" id="mainParty"><br>';
-		contentForm.innerHTML += '<label>Seculiere partijen?</label><input type="radio" name="party" id="secParty"><br>';
+		contentForm.innerHTML += '<label>Seculiere partijen?</label><input type="radio" name="party" id="secParty"><br>';*/
 	};
 
 	var back = function() {
