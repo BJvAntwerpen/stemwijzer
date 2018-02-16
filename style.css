@@ -64,7 +64,7 @@ h1, p, div {
 	border: 1px solid black;
 }
 
-input[type="checkbox"] {
+input[type="checkbox"], input[type="radio"] {
 	position: absolute;
 	right: 5px;
 }

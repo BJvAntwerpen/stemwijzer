@@ -1,9 +1,9 @@
 var stemwijzerModule = (function() {
-	var statementNum = -1;
-	var answers = [];
-	var totalCounted = {};
-	var bestParties = [];
-	var checkedBox = [];
+	var statementNum = -1;//statement
+	var answers = [];//your answers
+	var totalCounted = {};//partyName:score
+	var bestParties = [];//best parties
+	var checkedBox = [];//options checked
 	var title = document.getElementById('Title');
 	var statement = document.getElementById('statement');
 	var form = document.getElementById('formContainer');
@@ -46,17 +46,19 @@ var stemwijzerModule = (function() {
 		totalCounted = {};
 		bestParties = [];
 		for (var i = 0; i < inputLength.length; i++) {
-			if (inputLength[i].checked == true && !(inputLength[i].id == 'mainParty' || inputLength[i].id == 'secParty')) {
+			if (inputLength[i].checked == true && !(inputLength[i].id == 'mainParty' || inputLength[i].id == 'secParty' || inputLength[i].id == 'normalParty')) {
 				checkedBox[i] = true;
+			} else if (inputLength[i].checked == true && (inputLength[i].id == 'mainParty' || inputLength[i].id == 'secParty' || inputLength[i].id == 'normalParty')) {
+				checkedBox[i] = 'true';
 			} else {
 				checkedBox[i] = false;
 			}
 		}
 		Questions:
 		for (i = 0; i < subjects.length; i++) {//question
-			for (var j = 0; j < subjects[i].parties.length; j++) {
-				var party = subjects[i].parties[j].name;
-				var opinion = subjects[i].parties[j].position;
+			for (var j = 0; j < subjects[i].parties.length; j++) {//loop through parties
+				var partyName = subjects[i].parties[j].name;// party name
+				var opinion = subjects[i].parties[j].position;// party position
 				if (answers[i] == 'skip') {
 					continue Questions;
 				}
@@ -64,10 +66,12 @@ var stemwijzerModule = (function() {
 					totalCounted[party] = 0;
 				}
 				if (answers[i] === opinion) {
-					if (checkedBox[i] == true) {
-						totalCounted[party] += 2;
-					} else {
-						totalCounted[party] += 1;
+					for (var k = 0; k < party.length; k++) {
+						if (checkedBox[i] === true) {
+							totalCounted[party] += 2;
+						} else {
+							totalCounted[party] += 1;
+						}
 					}
 				}
 			}
@@ -80,6 +84,9 @@ var stemwijzerModule = (function() {
 				tmpArray.push(totalCounted[name]);
 			}
 			var max = Math.max(...tmpArray);
+			if (max < 0) {
+				continue;
+			}
 			console.log(max);
 			bestParties = [];
 			statement.style.display = 'inline';
@@ -122,6 +129,15 @@ var stemwijzerModule = (function() {
 			{name:'DENK'},
 			{name:'Artikel 1'}
 		];
+		for (var i = 0; i < inputLength.length; i++) {
+			if (inputLength[i].id == 'normalParty' && inputLength[i].checked) {
+				return subjects;
+			} else if (inputLength[i].id == 'mainParty' && inputLength[i].checked) {
+				return bigParty;
+			} else if (inputLength[i].id == 'secParty' && inputLength[i].checked) {
+				return smallParty;
+			}
+		}
 	};
 
 	var calcPercent = function(count) {
@@ -149,8 +165,9 @@ var stemwijzerModule = (function() {
 		for (var i = 0; i < subjects.length; i++) {
 			contentForm.innerHTML += '<label>'+ subjects[i].title +'</label><input type="checkbox" name="extraWeight"><br>';
 		}
-		contentForm.innerHTML += '<label>Grote partijen?</label><input type="checkbox" name="groteParijen" id="mainParty"><br>';
-		contentForm.innerHTML += '<label>Seculiere partijen?</label><input type="checkbox" name="seculiereParijen" id="secParty"><br>';
+		contentForm.innerHTML += '<label>Standaard?</label><input type="radio" name="party" id="normalParty" checked><br>';
+		contentForm.innerHTML += '<label>Grote partijen?</label><input type="radio" name="party" id="mainParty"><br>';
+		contentForm.innerHTML += '<label>Seculiere partijen?</label><input type="radio" name="party" id="secParty"><br>';
 	};
 
 	var back = function() {
