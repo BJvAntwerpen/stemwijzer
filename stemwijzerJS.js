@@ -23,7 +23,6 @@ var stemwijzerModule = (function() {
 
 	var answered = function(answer) {
 		answers[statementNum] = answer;
-		console.log(statementNum);
 		if (statementNum === (subjects.length -1)) {
 			statementNum++;
 			document.getElementById('answerContainer').style.display = 'none';
@@ -39,21 +38,77 @@ var stemwijzerModule = (function() {
 		}
 	};
 
-	var countAnswers = function() {
+	var countFinal = function() {
 		statementNum++;
+		statement.style.display = 'inline';
 		form.style.display = 'none';
-		//var party = setPartySize();
-		totalCounted = {};
+		totalCounted = countAnswers();
 		bestParties = [];
 		for (var i = 0; i < inputLength.length; i++) {
 			if (inputLength[i].checked == true && !(inputLength[i].id == 'mainParty' || inputLength[i].id == 'secParty' || inputLength[i].id == 'normalParty')) {
 				checkedBox[i] = true;
 			} else if (inputLength[i].checked == true && (inputLength[i].id == 'mainParty' || inputLength[i].id == 'secParty' || inputLength[i].id == 'normalParty')) {
 				checkedBox[i] = 'true';
+				if (inputLength[i].id == 'mainParty') {
+					var checkedParty = 'mainParty';//grote partijen
+				} else if (inputLength[i].id == 'secParty') {
+					var checkedParty = 'secParty';//seculiere partijen
+				} else if (inputLength[i].id == 'normalParty') {
+					var checkedParty = 'normalParty';//alles
+				}
 			} else {
 				checkedBox[i] = false;
 			}
 		}
+
+		statement.innerHTML = 'Dit zijn de beste matches:<br>'
+		for (i = 0; i < 3; i++) {
+			var tmpArray = [];
+			var counter = {};
+			for (var name in totalCounted) {
+				if (checkedParty == 'normalParty') {
+					tmpArray.push(totalCounted[name]);
+					counter[name] = totalCounted[name];
+				} else if (checkedParty == 'mainParty') {
+					for (var j = 0; j < parties.length; j++) {
+						if (name == parties[j].name) {
+							if (parties[j].secular == false) {
+								tmpArray.push(totalCounted[name]);
+								counter[name] = totalCounted[name];
+							}
+						}
+					}
+				} else if (checkedParty == 'secParty') {
+					for (var j = 0; j < parties.length; j++) {
+						if (name == parties[j].name) {
+							if (parties[j].secular == true) {
+								tmpArray.push(totalCounted[name]);
+								counter[name] = totalCounted[name];
+							}
+						}
+					}
+				}
+			}
+			var max = Math.max(...tmpArray);
+			if (max < 0) {
+				continue;
+			}
+			bestParties = [];
+			statement.innerHTML += '' + (i+1) + '. ';
+			for (name in counter) {	
+				if (counter[name] == max) {
+					bestParties.push(name);
+					totalCounted[name] = ((i+1)*-1);
+					counter[name] = ((i+1)*-1);
+				}
+			}
+			statement.innerHTML += bestParties.join(', ');
+			calcPercent(max);
+		}
+	};
+
+	var countAnswers = function() {
+		totalCounted = {};
 		Questions:
 		for (i = 0; i < subjects.length; i++) {//question
 			for (var j = 0; j < subjects[i].parties.length; j++) {//loop through parties
@@ -66,78 +121,15 @@ var stemwijzerModule = (function() {
 					totalCounted[partyName] = 0;
 				}
 				if (answers[i] === opinion) {
-					//for (var k = 0; k < party.length; k++) {
-						if (checkedBox[i] === true) {
-							totalCounted[partyName] += 2;
-						} else {
-							totalCounted[partyName] += 1;
-						}
-					//}
+					if (checkedBox[i] === true) {
+						totalCounted[partyName] += 2;
+					} else {
+						totalCounted[partyName] += 1;
+					}
 				}
 			}
 		}
-
-		statement.innerHTML = 'Dit zijn de beste matches:<br>'
-		for (i = 0; i < 3; i++) {
-			var tmpArray = [];
-			for (var name in totalCounted) {	
-				tmpArray.push(totalCounted[name]);
-			}
-			var max = Math.max(...tmpArray);
-			if (max < 0) {
-				continue;
-			}
-			console.log(max);
-			bestParties = [];
-			statement.style.display = 'inline';
-			statement.innerHTML += '' + (i+1) + '. ';
-			for (name in totalCounted) {	
-				if (totalCounted[name] == max) {
-					bestParties.push(name);
-					totalCounted[name] = ((i+1)*-1);
-				}
-			}
-			statement.innerHTML += bestParties.join(', ');
-			calcPercent(max);
-		}
-	};
-
-	var setPartySize = function() {
-		var bigParty = [
-			{name:'PVV'},
-			{name:'SP'},
-			{name:'D66'},
-			{name:'GroenLinks'},
-			{name:'VVD'},
-			{name:'PvdA'},
-			{name:'CDA'}
-		];
-		var smallParty = [
-			{name:'Partij voor de Dieren'},
-			{name:'50Plus'},
-			{name:'VNL'},
-			{name:'Nieuwe Wegen'},
-			{name:'Forum voor Democratie'},
-			{name:'De Burger Beweging'},
-			{name:'Vrijzinnige Partij'},
-			{name:'Piratenpartij'},
-			{name:'Libertarische Partij'},
-			{name:'Lokaal in de Kamer'},
-			{name:'ChristenUnie'},
-			{name:'SGP'},
-			{name:'OndernemersPartij'},
-			{name:'DENK'},
-			{name:'Artikel 1'}
-		];
-		for (var i = 0; i < inputLength.length; i++) {
-			if (inputLength[i].id == 'normalParty' && inputLength[i].checked) {
-				return subjects;
-			} else if (inputLength[i].id == 'mainParty' && inputLength[i].checked) {
-				return bigParty;
-			} else if (inputLength[i].id == 'secParty' && inputLength[i].checked) {
-				return smallParty;
-			}
-		}
+		return totalCounted;
 	};
 
 	var calcPercent = function(count) {
@@ -151,7 +143,6 @@ var stemwijzerModule = (function() {
 		}
 		percent = (count/maxd*100).toFixed(1);
 		statement.innerHTML += ': ' + percent + '%<br>';
-		console.log(percent);
 	};
 
 	var clearClass = function() {
@@ -165,9 +156,9 @@ var stemwijzerModule = (function() {
 		for (var i = 0; i < subjects.length; i++) {
 			contentForm.innerHTML += '<label>'+ subjects[i].title +'</label><input type="checkbox" name="extraWeight"><br>';
 		}
-		/*contentForm.innerHTML += '<label>Standaard?</label><input type="radio" name="party" id="normalParty" checked><br>';
+		contentForm.innerHTML += '<label>Standaard?</label><input type="radio" name="party" id="normalParty" checked><br>';
 		contentForm.innerHTML += '<label>Grote partijen?</label><input type="radio" name="party" id="mainParty"><br>';
-		contentForm.innerHTML += '<label>Seculiere partijen?</label><input type="radio" name="party" id="secParty"><br>';*/
+		contentForm.innerHTML += '<label>Seculiere partijen?</label><input type="radio" name="party" id="secParty"><br>';
 	};
 
 	var back = function() {
@@ -215,6 +206,6 @@ var stemwijzerModule = (function() {
 		document.getElementById('contra').onclick = function(){answered('contra');};
 		document.getElementById('skip').onclick = function(){answered('skip');};
 		document.getElementById('back').onclick = function(){back();};
-		document.getElementById('next').onclick = function(){countAnswers();};
+		document.getElementById('next').onclick = function(){countFinal();};
 	})();
 })();

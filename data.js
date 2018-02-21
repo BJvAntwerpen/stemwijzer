@@ -323,7 +323,7 @@ var subjects = [
 	}//30
 ];
 
-var parties = [
+var parties = [//seculiere partijen: secular=true
 	{name: 'VVD', secular: true, size: 33, long: 'Volkspartij voor Vrijheid en Democratie'},
 	{name: 'CDA', secular: false, size: 19, long: 'Christen Democratisch Appel'},
 	{name: 'PVV', secular: true, size: 20, long: 'Partij voor de Vrijheid'},
